@@ -1,0 +1,17 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+
+ <h1>Book List</h1>
+  <table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+    </tr>
+    {% for b in books2 %}
+        <tr>
+            <td>{{b.title}}</td>
+            <td>{{b.author}}</td>
+        </tr>
+    {% endfor %}
+  </table>
+{% endblock content %}

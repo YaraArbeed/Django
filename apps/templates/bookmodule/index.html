@@ -1,2 +1,77 @@
-<!--<h1> Hello to Ebook World!</h1>-->
-<h1>Hello from {{ name }}!</h1>
+{% extends "layouts/base.html" %}
+{% block title %}book info{% endblock %}
+
+{% block stylesheets %}
+<style>
+td, th {
+  padding: 8px;
+  border-bottom: 1px solid;
+}
+table {
+  border-collapse: collapse; 
+  width: 100%;
+}
+tr:nth-child(even) {
+  background-color: #F5F5F5;
+}
+tr:hover {
+  background-color: lightgray;
+}
+
+a:link, a:visited {
+  border-radius: 25px; 		/* make it rounded box */
+  background: #F5F5F5;  		/* or: rgb(245,245,245) */
+  padding: 10px; 		/* make surrounding area for text */
+  text-align: center; 		/* center the text */
+  font-weight: bold; 		/* make the text bold */
+  border: 3px solid black;  	/* border of the box */
+  text-decoration: none;  	/* remove the underline from link */
+}
+a:hover, a:active {
+  background-color: #D3D3D3;	/* hex number of the color */
+  color: black;
+}
+
+
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<h1> Hello to Ebook World!</h1>
+<a href="/books">Available Books</a>
+<table>
+    <caption>Table 1: order details of customer 1234567</caption>
+    <tr>
+    <th>Item</th>
+    <th>Quantity</th>
+    <th>Unit Price</th>
+    <th>Total Price</th>
+    </tr>
+    <tr>
+    <td>Orange</td>
+    <td colspan="2">15</td>
+    <td>30</td>
+    </tr>
+    <tr>
+    <td>Lemon</td>
+    <td>6</td>
+    <td rowspan="2">1.50</td>
+    <td>9</td>
+    </tr>
+    <tr>
+    <td>Apple</td>
+    <td>15</td>
+    <td>2.5</td>
+    </tr>
+    </table>
+    <br>
+   <form method="get">
+    <input type="range" disabled/>
+    <br>
+    <button type="submit">submit the form</button>
+    <br>
+    <button type="button">Go back</button>
+   </form> 
+{% endblock content %}
+

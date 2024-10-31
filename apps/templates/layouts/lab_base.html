@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+ <title>{% block title %} {% endblock title %}</title>
+ <meta name="keywords" content="Books, recent, Learning, library">
+ <meta name="description" content="Books website">
+ <meta name="author" content="author name">
+ <link rel="icon" href="{% static 'images/qu-icon.jpg' %}">
+ <meta charset="UTF-8">
+ <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- include css file -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fontawesome/4.7.0/css/font-awesome.min.css"> <!--his step is asking you to include Font Awesome, a popular icon library, in the <head> section of the base.html template. Adding this line:-->
+ {% block stylesheets %}{% endblock stylesheets %}
+</head>
+<body>
+
+ {% include "includes/lab_header.html" %}
+ {% block content %} {% endblock content %}
+ {% include "includes/lab_footer.html" %}
+</body>
+</html>

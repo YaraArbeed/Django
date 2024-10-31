@@ -1,0 +1,51 @@
+/* Container and block styles */
+.container {
+    width: 100%;
+    margin: auto;
+}
+
+/* Background colors */
+#block1 {
+    background-color: #ccffcc; /* light green */
+}
+
+#block2 {
+    background-color: #333; /* dark gray */
+}
+
+#block3 {
+    background-color: black;
+}
+
+/* Default colors for each link */
+#block1 a {
+    color: red;
+}
+
+#block2 a {
+    color: yellow;
+}
+
+#block3 a {
+    color: white;
+}
+a {
+    display: block;
+    text-decoration: underline;
+    padding: 10px;
+    font-size: 18px;
+    text-align: center;
+
+}
+/* Common Visited, Hover, and Active styles for all links */
+a:visited {
+    color: purple !important;
+}
+
+a:hover {
+    color: pink !important;
+}
+
+a:active {
+    color: blue !important;
+}

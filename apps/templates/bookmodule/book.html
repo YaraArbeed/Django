@@ -1,0 +1,12 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+{%load static%}
+<h3>Book details</h3>
+<h4>Title</h4>
+<p>{{book.title}}</p>
+<h4>authors</h4>
+<p>{{book.author}}</p>
+<img src="{% static '/images/desert.jpg'%}"/>
+<br>
+
+{% endblock content %}
