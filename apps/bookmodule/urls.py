@@ -22,6 +22,14 @@ path('books/search', views.search, name='search'),
 #---------------------Lab7------------------------------------
 path('books/simple/query', views.simple_query, name='query'),
 path('books/complex/query', views.lookup_query, name='lookup_query'),
-
-
+#----------------------AI project--------------------------------------
+path('predict', views.predict, name='predict'),
+path('home', views.home, name='home'),
+#----------------------Lab8----------------------------------------------
+path('books/lab8/task1', views.lab8_task1, name='lab8_task1'),
+path('books/lab8/task2', views.lab8_task2, name='lab8_task2'),
+path('books/lab8/task3', views.lab8_task3, name='lab8_task3'),
+path('books/lab8/task4', views.lab8_task4, name='lab8_task4'),
+path('books/lab8/task5', views.lab8_task5, name='lab8_task5'),
+path('books/lab8/task7', views.lab8_task7, name='lab8_task7'),
 ]

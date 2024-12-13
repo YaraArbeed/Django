@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 7 - Number of Students in Each City</title>
+</head>
+<body>
+    <h1>Number of Students in Each City</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>City</th>
+                <th>Number of Students</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for city_data in students_per_city %}
+            <tr>
+                <td>{{ city_data.address__city }}</td>
+                <td>{{ city_data.num_students }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

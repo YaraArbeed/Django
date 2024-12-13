@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Prediction Results</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/theme.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Prediction Results</h1>
+    </div>
+
+    <!-- Prediction Card -->
+    <div class="card prediction-card">
+        <img src="data:image/png;base64,{{ plot }}" alt="LSTM Predictions" style="width:100%; border-radius: 10px;">
+        
+        <h2>Predictions as Text</h2>
+        <pre>{{ predictions_text }}</pre>
+    </div>
+
+    <!-- Back Button -->
+    <div style="text-align: center; margin: 1em;">
+        <a href="{% url 'home' %}">
+            <button>Go Back</button>
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    </div>
+</body>
+</html>

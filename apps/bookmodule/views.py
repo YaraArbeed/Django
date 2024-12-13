@@ -1,6 +1,17 @@
 from django.shortcuts import render,redirect
-from .models import Book
-
+from .models import Book,Student,Address
+from django.db.models import Q
+from django.db.models import Count,Sum, Avg, Max, Min
+#--------------------AI project-------------------------------
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
+import matplotlib.pyplot as plt
+import io
+import base64
+from django.shortcuts import render
+#--------------------------------------------------------------
 def index(request):
 # render the appropriate template for this request
  return render(request, 'bookmodule/index.html')
@@ -100,3 +111,132 @@ def lookup_query(request):
   return render(request, 'bookmodule/bookList2.html', {'books2':mybooks})
  else:
   return render(request, 'bookmodule/CS471_Labs/index.html')
+#---------------------------AI project-----------------------------------
+# Helper function to convert a plot to a PNG image
+def plot_to_image():
+    buf = io.BytesIO()
+    plt.savefig(buf, format='png')
+    buf.seek(0)
+    image_png = buf.getvalue()
+    buf.close()
+    return base64.b64encode(image_png).decode('utf-8')
+
+def home(request):
+    return render(request, 'bookmodule/home.html')
+
+# Register mse if used as a shorthand
+@tf.keras.utils.register_keras_serializable()
+def mse(y_true, y_pred):
+    return tf.keras.losses.mean_squared_error(y_true, y_pred)
+# Load the pre-trained model (global loading to avoid repeated loading)
+MODEL_PATH = r"C:\Users\yarax\Downloads\stacked_model.h5"
+
+pretrained_model = tf.keras.models.load_model(
+    MODEL_PATH,
+    custom_objects={'mse': tf.keras.losses.MeanSquaredError}
+)
+def predict(request):
+    if request.method == 'POST' and 'csv_file' in request.FILES:
+        try:
+            csv_file = request.FILES['csv_file']
+            
+            # Read the CSV file without headers
+            data = pd.read_csv(csv_file, header=None)
+            data.columns = ['Date', 'Consumption']  # Manually assign column names
+            
+            # Parse the 'Date' column as datetime, assuming day-first format
+            data['Date'] = pd.to_datetime(data['Date'], format='%d-%b', errors='coerce')
+            data = data.dropna(subset=['Date'])  # Drop rows where date parsing failed
+            data.set_index('Date', inplace=True)
+            
+            # Resample to daily and then to hourly data
+            daily_data = data.resample('D').interpolate(method='linear')
+            hourly_data = daily_data.resample('H').interpolate(method='linear')
+
+            # Normalize data
+            scaler = MinMaxScaler()
+            hourly_data['Consumption'] = scaler.fit_transform(hourly_data[['Consumption']])
+
+            # Prepare sequences for LSTM
+            sequence_length = 24
+            X, y = [], []
+            for i in range(len(hourly_data) - sequence_length):
+                X.append(hourly_data['Consumption'].values[i:i + sequence_length])
+                y.append(hourly_data['Consumption'].values[i + sequence_length])
+            X = np.array(X).reshape((len(X), sequence_length, 1))
+            y = np.array(y)
+
+            # Use the pre-trained model for predictions
+            predictions = pretrained_model.predict(X)
+            predictions = scaler.inverse_transform(predictions)
+
+            # Convert predictions and actual values to text format
+            predictions_text = "\n".join([f"Predicted Consumption: {pred[0]:.2f}" for pred in predictions])
+
+               # Plot only the predicted values
+            plt.figure(figsize=(15, 8))  # Adjust the figure size as needed
+            plt.plot(predictions, label='Predicted Consumption', color='orange')
+            plt.title('Hourly Predicted Consumption')
+            plt.xlabel('Time (Hours)')
+            plt.ylabel('Predicted Consumption')
+            plt.grid(True)  # Optional: Adds a grid to the background for better readability
+            plt.legend().remove()
+            image = plot_to_image()
+
+        
+
+            # Render results on a webpage
+            return render(request, 'bookmodule/predict.html', {'plot': image, 'predictions_text': predictions_text})
+
+        except Exception as e:
+            print("Error during prediction:", e)
+            return render(request, 'bookmodule/home.html', {'error': str(e)})
+
+    return render(request, 'bookmodule/home.html')
+#--------------------------------Lab8--------------------------
+def lab8_task1(request):
+    # Query to fetch books with price <= 50
+    books = Book.objects.filter(Q(price__lte=50))
+    return render(request, 'bookmodule/CS471_Labs/lab8_task1.html', {'books': books})
+
+def lab8_task2(request):
+    #Use Q operators to filter the books
+    books =  Book.objects.filter(
+        Q(edition__gt=2) & 
+        (Q(title__icontains='qu') | Q(author__icontains='qu'))
+    )
+    return render(request, 'bookmodule/CS471_Labs/lab8_task2.html', {'books': books})
+
+def lab8_task3(request):
+    #Use ~Q operators to filter the books
+    books =  Book.objects.filter(
+        ~Q(edition__gt=2) & 
+        (~Q(title__icontains='qu') | ~Q(author__icontains='qu'))
+    )
+    return render(request, 'bookmodule/CS471_Labs/lab8_task3.html', {'books': books})
+
+def lab8_task4(request):
+    # Retrieve books and order them by title
+    books = Book.objects.order_by('title')
+    print(books) 
+    # Render the results to an HTML template
+    return render(request, 'bookmodule/CS471_Labs/lab8_task4.html', {'books': books})
+
+def lab8_task5(request):
+    # Perform aggregation
+    stats = Book.objects.aggregate(
+        total_books=Count('id'),
+        total_price=Sum('price', default=0),
+        average_price=Avg('price'),
+        max_price=Max('price'),
+        min_price=Min('price')
+    )
+    # Pass the aggregated data to the template
+    return render(request, 'bookmodule/CS471_Labs/lab8_task5.html', {'stats': stats})
+
+def lab8_task7(request):
+    # Annotate students by city and count the number of students in each city
+    students_per_city = Student.objects.values('address__city').annotate(num_students=Count('id')).order_by('address__city')
+
+    # Render the results to the HTML template
+    return render(request, 'bookmodule/CS471_Labs/lab8_task7.html', {'students_per_city': students_per_city})

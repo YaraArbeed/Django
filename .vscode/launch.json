@@ -16,7 +16,8 @@
             "django": true,
             "justMyCode": false,
             "autoStartBrowser": false,
-            
+            "env": {
+                "PYTHONPATH": "C:/Program Files/Git/CS471/bookproject/Scripts/python"
         }
     ]
 }
