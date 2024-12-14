@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Landing Page</title>
+</head>
+<body>
+    <h1>Welcome to the Book Management System</h1>
+    <p>Navigate to the following pages:</p>
+    <ul>
+        <li><a href="{% url 'revision_task2' %}">List of Books</a></li>
+        <li>
+            <a href="{% url 'revision_task3' book_id=1 %}">
+                Book Details (Sample Book with ID=1)
+            </a>
+        </li>
+    </ul>
+</body>
+</html>

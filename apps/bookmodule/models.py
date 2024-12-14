@@ -13,3 +13,10 @@ class Student(models.Model):
     name = models.CharField(max_length=100)
     age = models.PositiveIntegerField()
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+#--------------------Revision------------------------------------
+class Author (models.Model):
+  Name=models.CharField(max_length=100) 
+                         
+class ExamBook(models.Model):
+    Title=models.CharField(max_length=100)
+    Author=models.ForeignKey(Author, on_delete=models.CASCADE)

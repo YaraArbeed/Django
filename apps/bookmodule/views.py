@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect
-from .models import Book,Student,Address
+from django.shortcuts import render,redirect,get_object_or_404
+from .models import Book,Student,Address,ExamBook,Author
 from django.db.models import Q
 from django.db.models import Count,Sum, Avg, Max, Min
 #--------------------AI project-------------------------------
@@ -240,3 +240,14 @@ def lab8_task7(request):
 
     # Render the results to the HTML template
     return render(request, 'bookmodule/CS471_Labs/lab8_task7.html', {'students_per_city': students_per_city})
+#------------------------------Revision------------------------------------
+def revision_task1(request):
+    return render(request, 'bookmodule/CS471_Labs/revision_task1.html')
+
+def revision_task2(request):
+    books = ExamBook.objects.select_related('Author').all()
+    return render(request, 'bookmodule/CS471_Labs/revision_task2.html', {'books': books})
+
+def revision_task3(request, book_id):
+    book = get_object_or_404(ExamBook, id=book_id)
+    return render(request, 'bookmodule/CS471_Labs/revision_task3.html', {'book': book})

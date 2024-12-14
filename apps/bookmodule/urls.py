@@ -32,4 +32,10 @@ path('books/lab8/task3', views.lab8_task3, name='lab8_task3'),
 path('books/lab8/task4', views.lab8_task4, name='lab8_task4'),
 path('books/lab8/task5', views.lab8_task5, name='lab8_task5'),
 path('books/lab8/task7', views.lab8_task7, name='lab8_task7'),
+#------------------------Revision-----------------------------
+path('books/revision/task1', views.revision_task1, name='revision_task1'),  # Landing Page
+path('books/revision/task2', views.revision_task2, name='revision_task2'),  # List Books Page
+path('books/revision/task3/<int:book_id>/', views.revision_task3, name='revision_task3') # Book Details Page
+
+
 ]

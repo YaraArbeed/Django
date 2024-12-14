@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books List</title>
+</head>
+<body>
+    <h1>Books and Their Authors</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.Title }}</td>
+                <td>{{ book.Author.Name }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No books found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
