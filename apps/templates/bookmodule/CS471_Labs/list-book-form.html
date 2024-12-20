@@ -1,0 +1,31 @@
+<h1>List of Books</h1>
+<a href="{% url 'add_book_form' %}">Add New Book</a>
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Edition</th>
+        <th>Author</th>
+        <th>Actions</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.price }}</td>
+        <td>{{ book.edition }}</td>
+        <td>{{ book.author }}</td>
+        <td>
+            <form action="{% url 'edit_book_form' book.id %}" method="get" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Edit</button>
+            </form>
+            
+            <!-- Delete Button as a Form -->
+            <form action="{% url 'delete_book_form' book.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>

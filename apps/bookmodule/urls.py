@@ -9,7 +9,7 @@ path('filterbooks',views.filterbooks),
 path('book/<int:bId>',views.book),
 #----------------------Lab4--------------------------------------
  path('index', views.lab_index, name= "books.index"),
- path('list_books/', views.list_books, name= "books.list_books"),
+ path('list_books/', views.list_books2, name= "books.list_books"),
  path('<int:bookId>/', views.viewbook, name="books.view_one_book"),
  path('aboutus/', views.aboutus, name="books.aboutus"),
 #----------------------Lab5---------------------------------------
@@ -35,7 +35,15 @@ path('books/lab8/task7', views.lab8_task7, name='lab8_task7'),
 #------------------------Revision-----------------------------
 path('books/revision/task1', views.revision_task1, name='revision_task1'),  # Landing Page
 path('books/revision/task2', views.revision_task2, name='revision_task2'),  # List Books Page
-path('books/revision/task3/<int:book_id>/', views.revision_task3, name='revision_task3') # Book Details Page
-
+path('books/revision/task3/<int:book_id>/', views.revision_task3, name='revision_task3'), # Book Details Page
+#------------------------Lab9-----------------------------------------------
+    path('books/lab9_part1/listbooks', views.list_books, name='list_books'),
+    path('books/lab9_part1/addbook', views.add_book, name='add_book'),
+    path('books/lab9_part1/editbook/<int:id>', views.edit_book, name='edit_book'),
+    path('books/lab9_part1/deletebook/<int:id>', views.delete_book, name='delete_book'),
+    path('books/lab9_part2/listbooks', views.list_books_form, name='list_books_form'),
+    path('books/lab9_part2/addbook', views.add_book_form, name='add_book_form'),
+    path('books/lab9_part2/editbook/<int:id>', views.edit_book_form, name='edit_book_form'),
+    path('books/lab9_part2/deletebook/<int:id>', views.delete_book_form, name='delete_book_form'),
 
 ]

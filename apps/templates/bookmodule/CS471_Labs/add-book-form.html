@@ -1,0 +1,7 @@
+<h1>{% if form.instance.id %}Edit{% else %}Add{% endif %} Book</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% if form.instance.id %}Save Changes{% else %}Add Book{% endif %}</button>
+</form>
+<a href="{% url 'list_books_form' %}">Back to list</a>

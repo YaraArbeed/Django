@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import Book,Student,Address,ExamBook,Author
 from django.db.models import Q
 from django.db.models import Count,Sum, Avg, Max, Min
+from .forms import BookForm
 #--------------------AI project-------------------------------
 import pandas as pd
 import numpy as np
@@ -67,7 +68,7 @@ def __getBooks():
 #-----------------------Lab4-------------------------------------
 def lab_index(request):
  return render(request, "bookmodule/CS471_Labs/index.html")
-def list_books(request):
+def list_books2(request):
  return render(request, 'bookmodule/CS471_Labs/list_books.html')
 def viewbook(request, bookId):
  return render(request, 'bookmodule/CS471_Labs/one_book.html')
@@ -251,3 +252,72 @@ def revision_task2(request):
 def revision_task3(request, book_id):
     book = get_object_or_404(ExamBook, id=book_id)
     return render(request, 'bookmodule/CS471_Labs/revision_task3.html', {'book': book})
+#------------------------------Lab9---------------------------------------
+def list_books(request):
+    books = Book.objects.all()
+    return render(request, 'bookmodule/CS471_Labs/list-books.html', {'books': books})
+
+def add_book(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        price = request.POST.get('price')
+        edition = request.POST.get('edition')
+        author = request.POST.get('author')
+        if title and price and edition and author:
+            Book.objects.create(title=title, price=float(price), edition=int(edition), author=author)
+            return redirect('list_books')
+    return render(request, 'bookmodule/CS471_Labs/add_book.html')
+
+def edit_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    if request.method == 'POST':
+        book.title = request.POST.get('title', book.title)
+        book.price = float(request.POST.get('price', book.price))  # Convert to float
+        book.edition = int(request.POST.get('edition', book.edition))  # Convert to int
+        book.author = request.POST.get('author', book.author)
+        book.save()
+        return redirect('list_books')
+    return render(request, 'bookmodule/CS471_Labs/edit_book.html', {'book': book})
+
+
+
+def delete_book(request, id):
+    book = get_object_or_404(Book, id=id)
+    book.delete()
+    return redirect('list_books')
+#----------------------------------------------------------------
+# List books
+def list_books_form(request):
+    books = Book.objects.all()
+    return render(request, 'bookmodule/CS471_Labs/list-book-form.html', {'books': books})
+
+# Add a new book
+def add_book_form(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('list_books_form')
+    else:
+        form = BookForm()
+    return render(request, 'bookmodule/CS471_Labs/add-book-form.html', {'form': form})
+
+# Edit a book
+def edit_book_form(request, id):
+    book = get_object_or_404(Book, id=id)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('list_books_form')
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'bookmodule/CS471_Labs/edit-book-form.html', {'form': form})
+
+# Delete a book
+def delete_book_form(request, id):
+    book = get_object_or_404(Book, id=id)
+    if request.method == 'POST':
+        book.delete()
+        return redirect('list_books_form')
+    return render(request, 'bookmodule/CS471_Labs/delete-book-form.html', {'book': book})
