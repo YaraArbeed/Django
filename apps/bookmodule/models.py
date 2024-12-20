@@ -20,3 +20,22 @@ class Author (models.Model):
 class ExamBook(models.Model):
     Title=models.CharField(max_length=100)
     Author=models.ForeignKey(Author, on_delete=models.CASCADE)
+#---------------------Lab10 Task2--------------------------------------
+class Address2(models.Model):
+    city = models.CharField(max_length=100)
+
+class Student2(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.PositiveIntegerField()
+    addresses = models.ManyToManyField(Address2)
+    
+class Image(models.Model):
+    title = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='images/')
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+

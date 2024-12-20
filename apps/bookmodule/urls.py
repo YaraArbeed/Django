@@ -45,5 +45,15 @@ path('books/revision/task3/<int:book_id>/', views.revision_task3, name='revision
     path('books/lab9_part2/addbook', views.add_book_form, name='add_book_form'),
     path('books/lab9_part2/editbook/<int:id>', views.edit_book_form, name='edit_book_form'),
     path('books/lab9_part2/deletebook/<int:id>', views.delete_book_form, name='delete_book_form'),
-
+#--------------------------Lab10--------------------------------------------------
+    path('students/', views.list_students, name='list_students'),
+    path('students/add/', views.add_student, name='add_student'),
+    path('students/edit/<int:pk>/', views.edit_student, name='edit_student'),
+    path('students/delete/<int:pk>/', views.delete_student, name='delete_student'),
+    path('students2/', views.list_students2, name='list_students2'),
+    path('students2/add/', views.add_student2, name='add_student2'),
+    path('students2/edit/<int:pk>/', views.edit_student2, name='edit_student2'),
+    path('students2/delete/<int:pk>/', views.delete_student2, name='delete_student2'),
+    path('images/upload/', views.upload_image, name='upload_image'),
+    path('images/', views.list_images, name='list_images'),
 ]

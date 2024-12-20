@@ -1,0 +1,16 @@
+<h1>List of Images</h1>
+<table border="1">
+    <tr>
+        <th>Title</th>
+        <th>Image</th>
+        <th>Description</th>
+    </tr>
+    {% for image in images %}
+    <tr>
+        <td>{{ image.title }}</td>
+        <td><img src="{{ image.image.url }}" width="100" /></td>
+        <td>{{ image.description }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="{% url 'upload_image' %}">Upload New Image</a>

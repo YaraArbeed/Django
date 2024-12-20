@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Book,Student,Address,ExamBook,Author
+from .models import Book,Student,Address,ExamBook,Author,Student2,Address2,Image
 from django.db.models import Q
 from django.db.models import Count,Sum, Avg, Max, Min
-from .forms import BookForm
+from .forms import BookForm,StudentForm, AddressForm,Student2Form, Address2Form,ImageForm
 #--------------------AI project-------------------------------
 import pandas as pd
 import numpy as np
@@ -321,3 +321,77 @@ def delete_book_form(request, id):
         book.delete()
         return redirect('list_books_form')
     return render(request, 'bookmodule/CS471_Labs/delete-book-form.html', {'book': book})
+#-------------------------Lab10--------------------------------------------
+def list_students(request):
+    students = Student.objects.all()
+    return render(request, 'bookmodule/CS471_Labs/list_students.html', {'students': students})
+
+def add_student(request):
+    if request.method == 'POST':
+        student_form = StudentForm(request.POST)
+        if student_form.is_valid():
+            student_form.save()
+            return redirect('list_students')
+    else:
+        student_form = StudentForm()
+    return render(request, 'bookmodule/CS471_Labs/add_student.html', {'form': student_form})
+
+def edit_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    if request.method == 'POST':
+        student_form = StudentForm(request.POST, instance=student)
+        if student_form.is_valid():
+            student_form.save()
+            return redirect('list_students')
+    else:
+        student_form = StudentForm(instance=student)
+    return render(request, 'bookmodule/CS471_Labs/edit_student.html', {'form': student_form})
+
+def delete_student(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    student.delete()
+    return redirect('list_students')
+#----------------------------------------------------
+def list_students2(request):
+    students = Student2.objects.all()
+    return render(request, 'bookmodule/CS471_Labs/list_students2.html', {'students': students})
+
+def add_student2(request):
+    if request.method == 'POST':
+        student_form = Student2Form(request.POST)
+        if student_form.is_valid():
+            student_form.save()
+            return redirect('list_students')
+    else:
+        student_form = Student2Form()
+    return render(request, 'bookmodule/CS471_Labs/add_student.html', {'form': student_form})
+
+def edit_student2(request, pk):
+    student = get_object_or_404(Student2, pk=pk)
+    if request.method == 'POST':
+        student_form = Student2Form(request.POST, instance=student)
+        if student_form.is_valid():
+            student_form.save()
+            return redirect('list_students')
+    else:
+        student_form = Student2Form(instance=student)
+    return render(request, 'bookmodule/CS471_Labs/edit_student.html', {'form': student_form})
+
+def delete_student2(request, pk):
+    student = get_object_or_404(Student2, pk=pk)
+    student.delete()
+    return redirect('list_students')
+
+def upload_image(request):
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('list_images')
+    else:
+        form = ImageForm()
+    return render(request, 'bookmodule/CS471_Labs/upload_image.html', {'form': form})
+
+def list_images(request):
+    images = Image.objects.all()
+    return render(request, 'bookmodule/CS471_Labs/list_images.html', {'images': images})
