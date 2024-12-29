@@ -36,6 +36,25 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+#----------------------Lecture10--------------------------------------------
+class Author3(models.Model):
+    fullname = models.CharField(max_length=100, null=False)  # Author's full name
+    address = models.TextField(max_length=500, null=True)  # Optional address of the author
+    
+    def __str__(self): 
+        return self.fullname  # Returns the author's name as a string representation
+class Book3(models.Model):
+    title = models.CharField(max_length=100, null=False)  # Title of the book
+    price = models.FloatField(default=0)  # Price of the book, default is 0
+    genre = models.CharField(max_length=50)  # Add the genre field here
+    authors = models.ManyToManyField(Author3)  # Many-to-many relationship with the Author model
+    coverPage = models.FileField(upload_to='documents/')  # or use ImageField for image-specific uploads
+
+    
+    def __str__(self): 
+        return self.title  # Returns the title of the book as a string representation
+
+
 
 
 

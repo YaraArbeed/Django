@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+{% block title %} update book {% endblock%}
+
+{% block content %}
+<h3>Updating a Book</h3>
+<form method="post">
+    {% csrf_token %}
+    {{form}}
+    <!--
+    <lable for="title">Title</lable>
+    <input type="text" id="title" name="title" value="{{obj.title}}"/>
+    <br>
+    <lable for="author">Author</lable>
+    <input type="text" id="author" name="author" value="{{obj.author}}"/>
+    <br>
+    <lable for="price">Price</lable>
+    <input type="number" id="price" name="price" value="{{obj.price}}"/>
+    <br>
+    <lable for="edition">Edition</lable>
+    <input type="number" id="edition" name="edition" value="{{obj.edition}}"/>
+    <br>
+-->
+    <button type="submit">Update</button>
+</form>
+{% endblock content %}

@@ -1,4 +1,6 @@
 {% extends "layouts/base.html" %}
+{% block title %} book list {% endblock%}
+
 {% block content %}
 
  <h1>Book List</h1>
@@ -6,11 +8,15 @@
     <tr>
         <th>Title</th>
         <th>Author</th>
+        <th>Price</th>
+        <th>Edition</th>
     </tr>
-    {% for b in books2 %}
+    {% for b in books %}
         <tr>
-            <td>{{b.title}}</td>
+            <td><a href="{% url 'readBook' bId=b.id %}">{{b.title}}</a></td>
             <td>{{b.author}}</td>
+            <td>{{b.price}}</td>
+            <td>{{b.edition}}</td>
         </tr>
     {% endfor %}
   </table>

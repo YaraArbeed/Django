@@ -56,4 +56,15 @@ path('books/revision/task3/<int:book_id>/', views.revision_task3, name='revision
     path('students2/delete/<int:pk>/', views.delete_student2, name='delete_student2'),
     path('images/upload/', views.upload_image, name='upload_image'),
     path('images/', views.list_images, name='list_images'),
+    #-------------------------Lecture9---------------------
+    path('addBook',views.addBook,name='addBook'),
+    path('updateBook/<int:bId>',views.updateBook,name='updateBook'),
+    path('listBooks',views.listBooks,name='listBooks'),
+    path('readBook/<int:bId>',views.readBook,name='readBook'),
+    path('deleteBook/<int:bId>', views.deleteBook, name="deleteBook"),
+    #--------------------------Lecture10--------------------------------
+    path('addBook3',views.addBook3,name='addBook3'),
+
+    
+    
 ]

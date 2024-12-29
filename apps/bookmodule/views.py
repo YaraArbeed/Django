@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from .models import Book,Student,Address,ExamBook,Author,Student2,Address2,Image
 from django.db.models import Q
 from django.db.models import Count,Sum, Avg, Max, Min
-from .forms import BookForm,StudentForm, AddressForm,Student2Form, Address2Form,ImageForm
+from .forms import BookForm,StudentForm, AddressForm,Student2Form, Address2Form,ImageForm,BookForm3
 #--------------------AI project-------------------------------
 import pandas as pd
 import numpy as np
@@ -395,3 +395,89 @@ def upload_image(request):
 def list_images(request):
     images = Image.objects.all()
     return render(request, 'bookmodule/CS471_Labs/list_images.html', {'images': images})
+#----------------------Lecture 9--------------------------------------
+
+#create book,update
+'''
+def addBook(request):
+    if request.method=='POST':
+        titleval=request.POST.get('title')
+        authorval=request.POST.get('author')
+        priceval=request.POST.get('price')
+        editionval=request.POST.get('edition')
+        obj=Book(title=titleval,author=authorval,price=priceval,edition=editionval)
+        obj.save()
+        return redirect('readBook',bId=obj.id)
+    return render(request,'bookmodule/addBook.html',{})
+'''
+def addBook(request):
+    obj = None
+    authors = Author.objects.all().order_by('Name')
+    if request.method=='POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            obj = form.save()
+            return redirect('readBook', bId = obj.id)
+    else: form = BookForm(None)
+    return render(request, "bookmodule/addBook.html", {'authors':authors, 'form':form})
+
+def updateBook(request,bId):
+    obj=Book.objects.get(id=bId)
+    if request.method=='POST':
+        form = BookForm(request.POST,instance=obj)
+        if form.is_valid():
+            obj = form.save()
+            return redirect('readBook', bId = obj.id)
+    form = BookForm(instance=obj)
+    return render(request, "bookmodule/addBook.html", {'form':form})
+
+'''
+def updateBook(request,bId):
+    obj=Book.objects.get(id=bId)
+    if request.method=='POST':
+        titleval=request.POST.get('title')
+        authorval=request.POST.get('author')
+        priceval=request.POST.get('price')
+        editionval=request.POST.get('edition')
+        obj.title=titleval
+        obj.author=authorval
+        obj.price=priceval
+        obj.edition=editionval
+        obj.save()
+        return redirect('readBook',bId=obj.id)
+    return render(request,"bookmodule/updateBook.html", {'obj':obj})
+'''
+def listBooks(request):
+    books=Book.objects.all()
+    return render(request,'bookmodule/bookList2.html',{'books':books})
+
+def readBook(request,bId):#same as show/display
+    obj=Book.objects.all().get(id=bId)
+    return render(request,'bookmodule/book.html',{'book':obj})
+
+def deleteBook(request, bId):
+    # Retrieve the book object with the given ID
+    obj = Book.objects.get(id=bId)
+    
+    if request.method == 'POST':
+        # Delete the book object
+        obj.delete()
+        # Redirect to the list of books after deletion
+        return redirect('listBooks')
+    
+    # Render the delete confirmation page
+    return render(request, "bookmodule/deleteBook.html", {'obj': obj})
+#---------------------------------Lecture10-----------------------------
+def addBook3(request):
+    if request.method == 'POST':
+        form = BookForm3(request.POST,request.FILES)
+        if form.is_valid():
+            price = form.cleaned_data['price']  # Access the cleaned price data from the form
+            print(f"Price is equal to: {price}")  # Print the price (or use it in your logic)
+            form.save()
+            return redirect('index')
+        print(form.errors)  # Print form errors to debug
+    form = BookForm3(None)
+    return render(request, 'bookmodule/addBook3.html', {'form':form})
+
+

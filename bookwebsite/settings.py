@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.bookmodule',
     'apps.usermodule',
+    'django_recaptcha',  # Add this line
+
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+RECAPTCHA_PUBLIC_KEY = '6LfZfqgqAAAAAPl4KxdxESubq6in_HlCFQ_4sgim'  # Replace with your public key for development
+RECAPTCHA_PRIVATE_KEY= '6LfZfqgqAAAAAF6ybhVIvR3HxZx5LVdJm9ke28Pb'  # Replace with your private key for development

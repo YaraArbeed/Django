@@ -1,0 +1,24 @@
+{% extends "layouts/base.html" %}
+{% block title %} Adding a Book {% endblock%}
+{% block content %}
+<h3>Adding a Book</h3>
+<form method="POST">
+    {% csrf_token %}
+    {{form}}
+<!--
+    <lable for="title">Title</lable>
+    <input type="text" id="title" name="title" placeholder="Enter title here"/>
+    <br>
+    <lable for="author">Author</lable>
+    <input type="text" id="author" name="author" placeholder="Enter name of author here"/>
+    <br>
+    <lable for="price">Price</lable>
+    <input type="number" id="price" name="price" placeholder="Enter price here" min="1" max="500"/>
+    <br>
+    <lable for="edition">Edition</lable>
+    <input type="number" id="edition" name="edition" placeholder="Enter edition here"/>
+    <br>
+-->
+    <button type="submit">Add</button>
+</form>
+{% endblock content %}
