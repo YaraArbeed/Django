@@ -1,1 +1,2 @@
-In this repository, I will update my work from the labs in Django
+In this repository, I will update my work on the Django Book Management System.
+
